@@ -16,7 +16,6 @@ const handleNewUser = async (req, res) => {
 
   // check for duplicate usernames in database
   const duplicateUser = await findUserByUsername(user);
-
   if (duplicateUser) return res.sendStatus(409); // Conflict
 
   try {
@@ -25,7 +24,7 @@ const handleNewUser = async (req, res) => {
 
     // To create a user and assign it a role in user_roles table as well we need to use a Transaction
 
-    // start Transaction
+    // transaction
     await knex.transaction(async (trx) => {
       // Insert the new user in 'users' table
       const newUserId = await createUser(user, hashedPwd, trx);
