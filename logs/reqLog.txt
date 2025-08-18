@@ -311,3 +311,11 @@
 20250818	18:40:53	a52ad371-f395-42df-8463-bf0402484272	POST	undefined	/register 
 20250818	18:41:40	d5528508-5529-41e9-9856-bc2dbe24cd68	POST	undefined	/register 
 20250818	18:42:12	1a47b3d0-0eb5-4a6d-abb0-936a6d49af92	POST	undefined	/register 
+20250818	21:34:23	e1e1a3f1-d8f5-4652-a372-3d31854aa361	POST	undefined	/register 
+20250818	21:34:30	95132f3e-4fe0-428b-a931-38ac0ae65f29	POST	undefined	/register 
+20250818	21:36:38	95003720-037d-44cb-b196-e1e130f77898	POST	undefined	/auth 
+20250818	21:37:16	16b72894-321b-4cc2-af32-4fd7c28a5c45	POST	undefined	/auth 
+20250818	21:37:31	b0cf8b1d-9aa8-45d5-a343-09b19403e994	POST	undefined	/auth 
+20250818	21:37:50	92383a7d-8664-4a0a-bb2d-29290a090de6	POST	undefined	/auth 
+20250818	21:37:55	870de6c7-912b-4402-9b49-01103f5736da	GET	undefined	/refresh 
+20250818	21:38:06	b4f85af9-4c1c-4749-9efc-abbac4407cc9	GET	undefined	/logout 
