@@ -1,26 +1,21 @@
+const knex = require('../db/db');
 const pool = require('../config/db');
 
 // registerController logic
 const findUserByUsername = async (username) => {
-  const result = await pool.query('SELECT * FROM users WHERE username = $1', [
-    username,
-  ]);
-  return result.rows[0];
+  const user = await knex('users').where({ username }).first();
+  return user;
 };
 
-const createUser = async (username, hashedPassword) => {
-  const result = await pool.query(
-    'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id',
-    [username, hashedPassword]
-  );
-  return result.rows[0].id;
+const createUser = async (username, hashedPassword, trx) => {
+  const [id] = await trx('users')
+    .insert({ username: username, password: hashedPassword })
+    .returning('id');
+  return typeof id === 'object' ? id.id : id;
 };
 
-const assignRoleToUser = async (userId, roleId) => {
-  await pool.query(
-    'INSERT INTO user_roles (user_id, role_id) VALUES ($1, $2)',
-    [userId, roleId]
-  );
+const assignRoleToUser = async (userId, roleId, trx) => {
+  await trx('user_roles').insert({ user_id: userId, role_id: roleId });
 };
 
 // authController logic

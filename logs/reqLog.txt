@@ -307,3 +307,7 @@
 20250811	15:46:41	79746ba8-5c11-4cfb-a85f-62ef5d6a785f	GET	undefined	/products 
 20250811	15:47:04	9705e3f8-bf04-4e6d-8c6a-96266feb7651	POST	undefined	/products 
 20250811	15:47:18	52c723bf-c820-4e34-901f-8bf7de3a744b	DELETE	undefined	/products 
+20250818	18:39:09	9ffd4f27-434c-4632-9571-ea5c0e0e175f	POST	undefined	/register 
+20250818	18:40:53	a52ad371-f395-42df-8463-bf0402484272	POST	undefined	/register 
+20250818	18:41:40	d5528508-5529-41e9-9856-bc2dbe24cd68	POST	undefined	/register 
+20250818	18:42:12	1a47b3d0-0eb5-4a6d-abb0-936a6d49af92	POST	undefined	/register 

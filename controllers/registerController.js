@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const pool = require('../config/db');
+const knex = require('../db/db');
 const {
   findUserByUsername,
   createUser,
@@ -26,20 +26,17 @@ const handleNewUser = async (req, res) => {
     // To create a user and assign it a role in user_roles table as well we need to use a Transaction
 
     // start Transaction
-    await pool.query('BEGIN');
-
-    // Insert the new user in 'users' table
-    const newUserId = await createUser(user, hashedPwd);
-    // Assign the new user a role of 2001 i.e. User in 'user_roles'
-    await assignRoleToUser(newUserId, 2001);
-    // Commit the Transaction
-    await pool.query('COMMIT');
+    await knex.transaction(async (trx) => {
+      // Insert the new user in 'users' table
+      const newUserId = await createUser(user, hashedPwd, trx);
+      // Assign the new user a role of 2001 i.e. User in 'user_roles'
+      await assignRoleToUser(newUserId, 2001, trx);
+    });
 
     res
       .status(201)
       .json({ success: `New user ${user} created with User role!` });
   } catch (err) {
-    await pool.query('ROLLBACK');
     console.error('Registration error:', err.message);
     res.status(500).json({ message: err.message });
   }
