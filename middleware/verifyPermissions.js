@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const knex = require('../db/db');
 
 const verifyPermissions = () => {
   return async (req, res, next) => {
@@ -10,18 +10,17 @@ const verifyPermissions = () => {
         return res.sendStatus(403); // No roles means no access
       }
 
-      const query = `SELECT DISTINCT p.name as permission
-                    FROM role_permissions rp
-                    JOIN permissions p ON rp.permission_id = p.id
-                    WHERE rp.role_id = ANY($1)`;
-      const { rows } = await pool.query(query, [roles]);
+      const permission = await knex('role_permissions AS rp')
+        .distinct('p.name as permission')
+        .join('permissions as p', 'rp.permission_id', 'p.id')
+        .whereIn('rp.role_id', roles);
 
-      const permissions = rows.map((row) => row.permission);
+      const permArray = permission.map((perm) => perm.permission);
 
       console.log(`User: ${req.user} Method: ${method}`);
-      console.log(`User permissions:`, permissions);
+      console.log(`User permissions:`, permArray);
 
-      if (!permissions.includes(method)) {
+      if (!permArray.includes(method)) {
         return res.sendStatus(403); // Forbidden
       }
 
