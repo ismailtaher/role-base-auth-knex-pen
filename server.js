@@ -8,10 +8,10 @@ const errorHandler = require('./middleware/errorHandler');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
-const { testConnection } = require('./config/testDB');
+const { testConnection } = require('./config/testConnection');
+const setupShutdown = require('./config/shutdown');
 const PORT = process.env.PORT || 3500;
 
-// test pg-db connection
 testConnection();
 
 // custom middleware logger
@@ -67,4 +67,10 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
+
+// to shutdown the app gracefully and destroy all connections to db
+// ensures zombie connections don't pile up
+setupShutdown(server);

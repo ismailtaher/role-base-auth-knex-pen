@@ -1,4 +1,3 @@
-const pool = require('../config/db');
 const knex = require('../db/db');
 
 const getAllProducts = async () => {
